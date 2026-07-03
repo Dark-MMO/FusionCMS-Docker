@@ -98,13 +98,13 @@ class Accounts_model extends CI_Model
 
     public function getInternalDetails($userId = 0)
     {
-        $query = $this->db->query("SELECT * FROM account_data WHERE id = ?", array($userId));
+        $query = $this->db->query("SELECT * FROM account_data WHERE id = ?", [$userId]);
 
         if ($query->getNumRows() > 0) {
             $result = $query->getResultArray();
             return $result[0];
         } else {
-            return false;
+            return [];
         }
     }
 
@@ -128,6 +128,22 @@ class Accounts_model extends CI_Model
     {
         $old_external_data = $this->accounts_model->getById($id);
         $old_internal_data = $this->accounts_model->getInternalDetails($id);
+
+        if (empty($old_internal_data)) {
+            $old_internal_data = [
+                'id' => $id,
+                'vp' => 0,
+                'dp' => 0,
+                'location' => 'Unknown',
+                'nickname' => $old_external_data[(string)column('account', 'username')],
+                'language' => $this->config->item('language'),
+                'avatar' => 1
+            ];
+
+            $this->db->table('account_data')->insert($old_internal_data);
+
+            $internal_data['nickname'] = $internal_data['nickname'] != '' ? $internal_data['nickname'] : $old_internal_data['nickname'];
+        }
 
         $old_values = array_merge($old_external_data, $old_internal_data);
         $new_values = array_merge($external_account_data, $external_account_access_data, $internal_data);
