@@ -8,6 +8,7 @@ $emulators = [
     'trinity_sl'               => 'TrinityCore - Shadowlands (9.2.7)',
     'trinity_bfa'              => 'TrinityCore - Battle for Azeroth (8.3.7)',
     'trinity_legion'           => 'TrinityCore - Legion (7.3.0)',
+    'trinity_cata_preservation'=> 'TrinityCore - Cataclysm Preservation Project (4.3.4)',
     'trinity_cata'             => 'TrinityCore - Cataclysm (4.3.4)',
     'trinity_wotlkclassic'     => 'TrinityCore - Wotlk Classic (3.4.3)',
     'trinity_cataclassic'      => 'TrinityCore - Cataclysm Classic (4.4.2)',
