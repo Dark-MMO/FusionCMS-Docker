@@ -4,7 +4,7 @@
     <img src="https://github.com/FusionWowCMS/FusionCMS/assets/12217476/e17a9db8-30dd-41bc-b4e9-30b66b55bc4f" alt="Logo">
   </a>
 
-<h3 align="center">FusionCMS</h3>
+<h3 align="center">FusionCMS Docker</h3>
 
   <p align="center">
     <a href="https://github.com/FusionWowCMS/FusionCMS/wiki"><strong>Explore the docs »</strong></a>
