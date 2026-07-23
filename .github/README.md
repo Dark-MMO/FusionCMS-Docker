@@ -38,7 +38,7 @@ Create a file named `compose.yaml` in your project directory:
 ```yaml
 services:
   fusioncms:
-    image: ghcr.io/dark-mmo/fusioncms-docker:latest
+    build: .
     container_name: fusioncms
     ports:
       - "83:80"
