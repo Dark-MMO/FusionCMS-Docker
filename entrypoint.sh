@@ -18,4 +18,5 @@ else
     echo "Writable permissions already configured."
 fi
 
-exec "$@"
+# Start Apache
+exec apache2-foreground
