@@ -31,6 +31,68 @@
 FusionCMS is a free, open-source content management system. Server owners all around the world rely upon FusionCMS for
 its ease of use and development, safe and secure codebase and dedication to simplicity.
 
+## Docker Compose
+
+Create a file named `compose.yaml` in your project directory:
+
+```yaml
+services:
+  fusioncms:
+    image: ghcr.io/dark-mmo/fusioncms-docker:latest
+    container_name: fusioncms
+    ports:
+      - "83:80"
+    volumes:
+      - ./fusion/cms-main:/var/www/html
+      - ./fusion/storage-www:/var/www/html/storage
+      - ./fusion/uploads-www:/var/www/html/uploads
+    depends_on:
+      fusiondb:
+        condition: service_started
+    restart: unless-stopped
+    networks:
+      - fusioncmsnetwork
+
+  fusiondb:
+    image: mariadb:10.6
+    container_name: fusioncms-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: fusionroot
+      MYSQL_DATABASE: fusiondb
+      MYSQL_USER: fusionuser
+      MYSQL_PASSWORD: fusionpass
+    volumes:
+      - ./fusion/database:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - fusioncmsnetwork
+
+networks:
+  fusioncmsnetwork:
+    name: fusioncms_network
+    driver: bridge
+```
+
+Start FusionCMS with:
+
+```bash
+docker compose up -d
+```
+
+Check running containers:
+
+```bash
+docker ps
+```
+
+FusionCMS will be available at:
+
+```
+http://localhost:83
+```
+
 ### Supported emulators
 
 | Emulator                                 | Status |
