@@ -3,20 +3,31 @@ set -e
 
 CMS_ROOT="/var/www/html"
 
-echo "Checking FusionCMS writable permissions..."
+echo "Setting FusionCMS permissions..."
 
-if [ ! -f "$CMS_ROOT/writable/.permissions_fixed" ]; then
-    mkdir -p "$CMS_ROOT/writable"
+# FusionCMS writable directories
+DIRS=(
+    "$CMS_ROOT/writable/cache"
+    "$CMS_ROOT/writable/backups"
+    "$CMS_ROOT/writable/logs"
+    "$CMS_ROOT/writable/uploads"
+)
 
-    chown -R www-data:www-data "$CMS_ROOT/writable"
-    chmod -R 775 "$CMS_ROOT/writable"
+for DIR in "${DIRS[@]}"; do
+    mkdir -p "$DIR"
+    chown -R www-data:www-data "$DIR"
+    chmod -R 775 "$DIR"
+done
 
-    touch "$CMS_ROOT/writable/.permissions_fixed"
+# Application directories FusionCMS needs writable
+for DIR in \
+    "$CMS_ROOT/application/config" \
+    "$CMS_ROOT/application/modules"
+do
+    chown -R www-data:www-data "$DIR"
+    chmod -R 775 "$DIR"
+done
 
-    echo "Writable permissions fixed."
-else
-    echo "Writable permissions already configured."
-fi
+echo "FusionCMS permissions complete."
 
-# Start Apache
 exec apache2-foreground
