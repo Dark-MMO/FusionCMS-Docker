@@ -39,3 +39,9 @@ RUN a2enmod rewrite headers deflate expires
 # Apache web root
 WORKDIR /var/www/html
 
+# Add startup permission fixer
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
